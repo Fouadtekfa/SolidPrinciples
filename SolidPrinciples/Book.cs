@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 
 namespace SolidPrinciples
 {
@@ -14,14 +9,6 @@ namespace SolidPrinciples
         public int NbPages { get; set; }
         public string ISBN { get; set; } = "";
 
-        public async Task SaveToFile()
-        {
-            await File.WriteAllTextAsync($"./book-{Titel}.json", JsonSerializer.Serialize(this,new
-                JsonSerializerOptions
-            { 
-            PropertyNameCaseInsensitive = true,
-            }
-                ));
-        }
+        
     }
 }
