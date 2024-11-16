@@ -2,15 +2,13 @@
 {
     public class Program
     {
-
-        
-
         static void Main(string[] args)
         {
-            BookRepository bookRepository = new BookRepository();
-            void BookManger(BookRepository bookRepository)
+
+            BookManger(new FileRepository());
+            void BookManger(IRepository repository)
             {
-                bookRepository.GetAll();
+                repository.GetAll();
                 //Menu pour gerer
                 // 1 GetAll
                 //2 GetByID

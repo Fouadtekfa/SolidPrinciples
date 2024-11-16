@@ -125,3 +125,42 @@ elle sera intégrée dans `IReadRepository`, sans affecter les interfaces ou class
 - Cette séparation garantit que les utilisateurs ne manipuleront que les fonctionnalités
 pertinentes pour leur logique métier.
 
+## Le principe D : Dependency Inversion Principle
+
+Le **principe Dependency Inversion** stipule qu'il est préférable que le code métier dépende d'abstractions (interfaces) plutôt que d'implémentations concrètes. Cela améliore la flexibilité, facilite les changements et permet une meilleure évolutivité de l’application.
+
+## Problématique
+Dans l’implémentation initiale, la méthode `BookManager` dépendait directement de l’implémentation concrète `BookRepository`.  
+- Si une nouvelle implémentation, comme `FileRepository`, était introduite pour gérer les sauvegardes dans un fichier, il fallait modifier la méthode `BookManager` pour remplacer `BookRepository` par `FileRepository`.  
+- Ce problème devient critique lorsque de nombreuses classes ou méthodes dépendent de `BookRepository`, car cela entraîne des modifications massives à travers le code.  
+
+Cela viole le principe D car le code métier est couplé à des implémentations spécifiques au lieu d'abstractions.
+
+## Solution mise en place
+
+Pour respecter le principe Dependency Inversion :  
+1. La méthode `BookManager` utilise désormais l’interface `IRepository` au lieu d’une implémentation spécifique (`BookRepository` ou `FileRepository`).  
+2. Les implémentations concrètes (`BookRepository`, `FileRepository`) respectent le contrat défini par `IRepository`.  
+3. Grâce à cette abstraction, `BookManager` peut utiliser n’importe quelle implémentation de `IRepository` sans modification de son code.  
+
+De plus, si l’application est configurée avec un système d’injection de dépendances, il devient encore plus simple de gérer les implémentations. Par exemple :  
+- Si l’on souhaite passer de `BookRepository` à `FileRepository`, il suffit de modifier la configuration du conteneur d’injection de dépendances (DI container).  
+- Cela garantit qu’aucune autre partie du code n’est impactée, car tout dépend de l’interface `IRepository`.
+
+Cette refactorisation garantit que :  
+1. **Flexibilité accrue :** On peut facilement introduire de nouvelles implémentations (comme un `SQLRepository`) sans modifier le code métier.  
+2. **Code maintenable :** Les changements techniques ou métiers sont isolés, limitant l’impact des modifications.  
+3. **Couplage réduit :** Le code métier n’est plus lié à une implémentation spécifique, mais à une abstraction.  
+
+## Exemple pratique
+
+- Si vous souhaitez ajouter une sauvegarde SQL avec un `SQLRepository` :  
+  1. Créez une nouvelle classe `SQLRepository` qui implémente `IRepository`.  
+  2. Configurez le conteneur d’injection de dépendances pour retourner `SQLRepository` lorsque `IRepository` est requis.  
+  3. Aucun changement n’est nécessaire dans `BookManager`, car celui-ci dépend de l’interface `IRepository`.
+
+- Si vous souhaitez permettre à l’utilisateur de choisir entre mémoire, fichier ou SQL :  
+  1. Ajoutez la logique de choix dans le conteneur DI pour retourner l’implémentation appropriée.  
+  2. Le reste du code reste inchangé.
+
+
