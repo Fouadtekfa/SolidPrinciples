@@ -127,7 +127,10 @@ pertinentes pour leur logique métier.
 
 ## Le principe D : Dependency Inversion Principle
 
-Le **principe Dependency Inversion** stipule qu'il est préférable que le code métier dépende d'abstractions (interfaces) plutôt que d'implémentations concrètes. Cela améliore la flexibilité, facilite les changements et permet une meilleure évolutivité de l’application.
+Le **principe Dependency Inversion** stipule qu'il est préférable que le
+code métier dépende d'abstractions (interfaces) plutôt que d'implémentations
+concrètes. Cela améliore la flexibilité, facilite les changements et permet
+une meilleure évolutivité de l’application.
 
 ## Problématique
 Dans l’implémentation initiale, la méthode `BookManager` dépendait directement de l’implémentation concrète `BookRepository`.  
@@ -148,19 +151,16 @@ De plus, si l’application est configurée avec un système d’injection de dépendan
 - Cela garantit qu’aucune autre partie du code n’est impactée, car tout dépend de l’interface `IRepository`.
 
 Cette refactorisation garantit que :  
-1. **Flexibilité accrue :** On peut facilement introduire de nouvelles implémentations (comme un `SQLRepository`) sans modifier le code métier.  
-2. **Code maintenable :** Les changements techniques ou métiers sont isolés, limitant l’impact des modifications.  
-3. **Couplage réduit :** Le code métier n’est plus lié à une implémentation spécifique, mais à une abstraction.  
+1. **Flexibilité accrue** : On peut facilement introduire de nouvelles implémentations (comme un `SQLRepository`) sans modifier le code métier.  
+2. **Code maintenable** : Les changements techniques ou métiers sont isolés, limitant l’impact des modifications.  
+3. **Couplage réduit** : Le code métier n’est plus lié à une implémentation spécifique, mais à une abstraction.  
 
 ## Exemple pratique
-
-- Si vous souhaitez ajouter une sauvegarde SQL avec un `SQLRepository` :  
+### Si vous souhaitez ajouter une sauvegarde SQL avec un `SQLRepository` :  
   1. Créez une nouvelle classe `SQLRepository` qui implémente `IRepository`.  
   2. Configurez le conteneur d’injection de dépendances pour retourner `SQLRepository` lorsque `IRepository` est requis.  
   3. Aucun changement n’est nécessaire dans `BookManager`, car celui-ci dépend de l’interface `IRepository`.
 
-- Si vous souhaitez permettre à l’utilisateur de choisir entre mémoire, fichier ou SQL :  
+### Si vous souhaitez permettre à l’utilisateur de choisir entre mémoire, fichier ou SQL :  
   1. Ajoutez la logique de choix dans le conteneur DI pour retourner l’implémentation appropriée.  
   2. Le reste du code reste inchangé.
-
-
