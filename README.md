@@ -74,12 +74,12 @@ Pour respecter le principe Liskov Substitution :
 
 ## Exemple pratique
 
-- **Ajouter un Cercle dans le futur** :  
+ ### Ajouter un Cercle dans le futur :  
   1. Créer une nouvelle classe `Circle` héritant de `ShapeWithSurface`.  
   2. Implémenter la méthode `GetSurface` avec la formule appropriée.  
   3. Aucune modification n’est nécessaire dans `SurfaceCalculator`, car celui-ci ne dépend que de `ShapeWithSurface`.  
 
-- **Ajouter une ligne courbe (sans surface)** :  
+ ### Ajouter une ligne courbe (sans surface) :  
   1. Créer une nouvelle classe héritant de `Shape`.  
   2. Aucune contrainte inutile ne sera imposée, car `Shape` n’a pas de méthode comme `GetSurface`.
 
