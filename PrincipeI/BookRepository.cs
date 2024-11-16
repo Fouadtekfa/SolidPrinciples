@@ -1,9 +1,9 @@
 ﻿namespace PrincipeI
 {
-    public class BookRepository : IBookRepository
+    public class BookRepository : IRepository
     {
         //private List<Book> books = new();
-        //ici just pour avoir une list 
+        //ici juste pour avoir une liste de livre par défauts
         private List<Book> books = new List<Book>
             {
                 new Book { Id = 1, Titel = "Le Petit Prince", Author = "Antoine de Saint-Exupéry", NbPages = 96, ISBN = "9780156012195" },

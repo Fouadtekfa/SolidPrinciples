@@ -7,7 +7,5 @@
         public int NbPages { get; set; }
         public string ISBN { get; set; } = "";
         public int Id { get; set; }
-
-        
     }
 }

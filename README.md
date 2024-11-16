@@ -86,3 +86,42 @@ Pour respecter le principe Liskov Substitution :
 - Toutes les classes **respectent le contrat défini** par leur classe mère.  
 - **Le système est extensible** : ajouter une nouvelle forme avec ou sans surface ne nécessite aucune
 modification des classes existantes.  
+
+
+## Le principe I (Interface Segregation Principle) 
+
+Le **principe Interface Segregation** stipule qu'il est préférable de diviser une grande interface en plusieurs petites interfaces spécifiques, regroupées par logique métier. Cela permet d’éviter les effets de bord et de limiter l’exposition des fonctionnalités inutiles ou dangereuses dans certains contextes. Une interface doit fournir uniquement ce qui est pertinent pour son utilisateur.
+
+## Problématique
+
+Dans notre implémentation initiale, une seule interface `IRepository` combinait toutes 
+les responsabilités (lecture et écriture).  
+- Cette approche exposait des méthodes inutiles ou risquées dans certains contextes, comme 
+la méthode `Delete` appelée dans une logique de lecture (`DisplayAllBook`), ce qui pouvait entraîner des effets de bord non souhaités.  
+- La méthode combinait des rôles hétérogènes, rendant l’interface difficile à maintenir et
+sujette aux erreurs.  
+
+## Solution mise en place
+
+Pour respecter le principe **Interface Segregation** :  
+1. L’interface `IRepository` a été décomposée en deux interfaces spécifiques :  
+   - **`IReadRepository`** : Pour les fonctionnalités de lecture (`GetByID`, `GetAll`).  
+   - **`IWriteRepository`** : Pour les fonctionnalités d’écriture (`Add`, `Update`, `Delete`, `Save`).  
+
+2. Une interface globale `IRepository` regroupe ces deux interfaces pour les cas où les deux logiques sont nécessaires.  
+
+3. La méthode `DisplayAllBook` utilise uniquement `IReadRepository`, empêchant ainsi toute manipulation accidentelle des fonctionnalités d’écriture.
+
+### Cette refactorisation garantit que :  
+1. **Respect du principe Interface Segregation** : Les interfaces sont spécifiques et cohérentes avec leurs responsabilités.  
+2. **Code sécurisé** : Les fonctionnalités inutiles dans certains contextes sont masquées, évitant les erreurs ou manipulations accidentelles.  
+3. **Facilité d’évolution** : Les interfaces sont modulaires, ce qui simplifie l’ajout de nouvelles fonctionnalités sans impact sur les classes existantes.  
+
+## Exemple pratique
+
+- Si une nouvelle méthode liée à la lecture doit être ajoutée,
+elle sera intégrée dans `IReadRepository`, sans affecter les interfaces ou classes liées à l’écriture.  
+- Inversement, une méthode liée à l’écriture sera ajoutée dans `IWriteRepository`.  
+- Cette séparation garantit que les utilisateurs ne manipuleront que les fonctionnalités
+pertinentes pour leur logique métier.
+
