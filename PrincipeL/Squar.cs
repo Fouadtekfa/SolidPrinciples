@@ -1,9 +1,9 @@
-﻿namespace PrincipeO
+﻿namespace PrincipeL
 {
     public class Squar : Shape
     {
         public int SideSize { get; set; }
 
-        public override int Surface => SideSize * SideSize;
+        public override int GetSurface() => SideSize * SideSize;
     }
 }
