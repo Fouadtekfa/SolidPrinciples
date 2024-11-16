@@ -55,3 +55,34 @@ Si je dois ajouter un **Cercle** (avec une propriété `Rayon`) dans le futur, il 
 
 Aucune modification ne sera nécessaire dans `SurfaceCalculator`, car celui-ci respecte désormais le principe Open/Closed de SOLID.  
 
+
+## Le principe L (Liskov Substitution Principle)
+
+Le **principe Liskov Substitution** stipule que si une méthode attend une classe de base (abstraite ou concrète), elle doit pouvoir fonctionner avec n’importe quelle classe dérivée sans modifier son comportement attendu. Cela garantit que les sous-classes respectent le contrat défini par leur classe mère, rendant le système extensible et robuste.
+
+## Implémentation initiale et problématique
+
+Dans notre implémentation initiale, la classe `SurfaceCalculator` utilisait la méthode `GetSurface()` définie dans `Shape`.  
+- Si on passait une forme comme `Rectangle` ou `Squar`, tout fonctionnait correctement.  
+- Mais lorsqu’une instance de `Line` (qui n’a pas de surface) était utilisée, cela provoquait une exception (`NotImplementedException`), cassant le comportement attendu.
+
+## La solution mise en place
+
+Pour respecter le principe Liskov Substitution :  
+- Une nouvelle classe abstraite `ShapeWithSurface` a été introduite pour représenter les formes ayant une surface mesurable (`Rectangle`, `Squar`).  
+- Les formes sans surface, comme `Line`, héritent directement de `Shape` sans être contraintes d’implémenter une méthode inutile.  
+
+## Exemple pratique
+
+- **Ajouter un Cercle dans le futur** :  
+  1. Créer une nouvelle classe `Circle` héritant de `ShapeWithSurface`.  
+  2. Implémenter la méthode `GetSurface` avec la formule appropriée.  
+  3. Aucune modification n’est nécessaire dans `SurfaceCalculator`, car celui-ci ne dépend que de `ShapeWithSurface`.  
+
+- **Ajouter une ligne courbe (sans surface)** :  
+  1. Créer une nouvelle classe héritant de `Shape`.  
+  2. Aucune contrainte inutile ne sera imposée, car `Shape` n’a pas de méthode comme `GetSurface`.
+
+- Toutes les classes **respectent le contrat défini** par leur classe mère.  
+- **Le système est extensible** : ajouter une nouvelle forme avec ou sans surface ne nécessite aucune
+modification des classes existantes.  

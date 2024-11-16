@@ -1,6 +1,6 @@
 ﻿namespace PrincipeL
 {
-    public class Squar : Shape
+    public class Squar : ShapeWithSurface
     {
         public int SideSize { get; set; }
 

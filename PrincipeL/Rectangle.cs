@@ -1,6 +1,6 @@
 ﻿namespace PrincipeL
 {
-    public class Rectangle : Shape
+    public class Rectangle : ShapeWithSurface
     {
         public int Hieght { get; set; }
         public int Width { get; set; }
