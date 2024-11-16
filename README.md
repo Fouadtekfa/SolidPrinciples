@@ -1,6 +1,9 @@
 # Application des principe SOLID
 
-## S Single Responsibility Principle 
+## S Single Responsibility Principle : 
+- **Une classe ou un module doit avoir une seule responsabilité** :cela signifie qu’elle doit se concentrer sur une seule tâche ou fonction bien définie, ce qui la rend plus simple à comprendre et à gérer.
+- **Une seule raison de changer** : si une classe doit être modifiée, ce sera uniquement parce que sa responsabilité a évolué, ce qui évite d'impacter d'autres parties du code.
+
 
 ## Implémentation initiale et problématique
 
